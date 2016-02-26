@@ -19,6 +19,6 @@
   },
   "scripts": {
     "run": "webpack-dev-server --progress --colors --devtool eval --hot --inline",
-    "package": "webpack -p && cp app.js ../resources"
+    "package": "webpack -p && mv app.js ../resources"
   }
 }
