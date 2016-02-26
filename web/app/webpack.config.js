@@ -4,7 +4,7 @@ var node_modules = path.resolve(__dirname, 'node_modules');
 
 module.exports = {
   entry: {
-    'app': './app/app',
+    'app': './app',
   },
   output: {    
     filename: "[name].js",
@@ -14,8 +14,8 @@ module.exports = {
     loaders: [
       { test: /\.css$/, loader: "style!css" },
       { test: /\.jsx?$/,
-        loaders: ['react-hot', 'babel'],
-        include: path.join(__dirname, 'app')
+        loaders: ['react-hot', 'jsx?harmony', 'babel'],
+        exclude: /node_modules/
       },
       { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
     ]

@@ -36,7 +36,7 @@ public class WebServlet extends HttpServlet {
                 "<html><head>" +
                 "<title>Unframework</title>" +
                 "</head><body>" +
-                "<div id=contents></div>" +
+                "<div id=content></div>" +
                 "<script src=\"" + scriptLocation + "\" text=\"text/javascript\"></script>" +
                 "</body></html>");
     }

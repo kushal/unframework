@@ -5,15 +5,14 @@ package com.kushaldave.unframework.api.base;
  */
 public class ApiException extends Exception {
   public final int responseCode;
-  public final String detail;
 
   public ApiException(int responseCode, String detail, Exception exception) {
-    super(exception);
+    super(detail, exception);
     this.responseCode = responseCode;
-    this.detail = detail;
   }
 
   public ApiException(int responseCode, String detail) {
     this(responseCode, detail, null);
   }
+
 }

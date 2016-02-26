@@ -64,6 +64,9 @@ public class ApiServlet extends HttpServlet {
 
   private JsonResponse dispatch(HttpServletRequest req, HttpServletResponse resp) throws Exception {
     String[] splitPath = req.getPathInfo().split("/");
+    if (splitPath.length == 1) {
+      throw new ApiException(404, "Unknown path");
+    }
     String pathStart = splitPath[1];
     if (pathStart.equals("auth")) {
       // Special case for auth, which doesn't have a user yet
@@ -71,12 +74,12 @@ public class ApiServlet extends HttpServlet {
     } else {
       User user = appContext.mongoService.userFromToken(req.getParameter("oauth_token"));
       if (user == null) {
-        throw new ApiException(403, "Invalid 'oauth_token'");
+        //throw new ApiException(403, "Invalid 'oauth_token'");
       }
 
       // This is the main dispatch.
       switch (pathStart) {
-        case "hello":
+        case "hellos":
           return helloEndpoints.handle(splitPath, req, user);
         default:
           throw new ApiException(404, "Unknown path '" + pathStart + "'");
@@ -90,6 +93,10 @@ public class ApiServlet extends HttpServlet {
    * TODO: This is is placeholder. The exception should be sent to a logger, not stdout, and
    * the stack trace should not be sent to end users.
    */
+  private static class ExceptionResponse {
+    public String errorMessage;
+  }
+
   private void handleException(
       HttpServletRequest req,
       HttpServletResponse resp,
@@ -98,7 +105,9 @@ public class ApiServlet extends HttpServlet {
   ) throws IOException {
     e.printStackTrace();
     resp.setStatus(responseCode);
-    resp.getWriter().write(Jsonifier.toJson(e));
+    ExceptionResponse response = new ExceptionResponse();
+    response.errorMessage = e.getMessage();
+    resp.getWriter().write(Jsonifier.toJson(response));
     log(req, false);
   }
 

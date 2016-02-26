@@ -30,26 +30,21 @@ public class HelloEndpoints extends Endpoints<Hello> {
     return appContext.mongoService.getHello(new ObjectId(id));
   }
 
-  // Although we use functional interfaces for local methods here, as the code grows more complex we
-  // can pull these into actual classes.
-  private final Map<String,Endpoint> endpoints =
-      new ImmutableMap.Builder<String, Endpoint>()
-          .put("list", this::list)
-          .build();
 
   @Override
   protected Map<String, Endpoint> getEndpoints() {
-    return endpoints;
+    // Although we use functional interfaces for local methods here, as the code grows more complex we
+    // can pull these into actual classes.
+    return new ImmutableMap.Builder<String, Endpoint>()
+            .put("list", this::list)
+            .build();
   }
-
-  private final Map<String,ResourceEndpoint<Hello>> resourceEndpoints =
-      new ImmutableMap.Builder<String, ResourceEndpoint<Hello>>()
-          .put("edit", this::edit)
-          .build();
 
   @Override
   protected Map<String, ResourceEndpoint<Hello>> getResourceEndpoints() {
-    return resourceEndpoints;
+    return new ImmutableMap.Builder<String, ResourceEndpoint<Hello>>()
+        .put("edit", this::edit)
+        .build();
   }
 
   @Override
