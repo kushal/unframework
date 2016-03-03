@@ -33,7 +33,6 @@ var Router = React.createClass({
   componentDidMount: function() {    
     window.addEventListener('popstate', (s) => this.handlePopState(s), true);
     Navigation.callback = (() => this.handlePopState());    
-    Cache.callback = ((state) => this.setState({loaded: state}));
   },
 
   render: function() {
